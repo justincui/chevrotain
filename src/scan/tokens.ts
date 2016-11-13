@@ -1,6 +1,6 @@
 import {TokenConstructor} from "./lexer_public"
 import {has, forEach, isEmpty, getSuperClass, difference, cloneArr, contains} from "../utils/utils"
-import {Token, LazyToken, IToken, SimpleLazyToken, LazyTokenCacheData, ISimpleToken, ISimpleLazyToken} from "./tokens_public"
+import {Token, LazyToken, IToken, SimpleLazyToken, LazyTokenCacheData, ISimpleToken, ISimpleLazyToken, tokenName} from "./tokens_public"
 import {HashTable} from "../lang/lang_extensions"
 
 export function fillUpLineToOffset(lineToOffset:number[], text:string):void {
@@ -183,6 +183,11 @@ export function assignTokenDefaultProps(tokenClasses:TokenConstructor[]):void {
         if (!hasExtendingTokensTypesProperty(currTokClass)) {
             currTokClass.extendingTokenTypes = []
         }
+
+        if (!hasTokenNameProperty(currTokClass)) {
+            // saved for fast access during CST building.
+            currTokClass.tokenName = tokenName(currTokClass)
+        }
     })
 }
 
@@ -207,6 +212,10 @@ export function hasShortKeyProperty(tokClass:TokenConstructor):boolean {
 
 export function hasExtendingTokensTypesProperty(tokClass:TokenConstructor):boolean {
     return has(tokClass, "extendingTokenTypes")
+}
+
+export function hasTokenNameProperty(tokClass:TokenConstructor):boolean {
+    return has(tokClass, "tokenName")
 }
 
 export type LazyTokenCreator = (startOffset:number,
