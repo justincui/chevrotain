@@ -17,6 +17,7 @@
     "jsonfile": "^2.2.3",
     "lodash": "^3.10.1",
     "nearley": "^2.7.11",
+    "syntax-cli": "0.0.78",
     "wrench": "^1.5.8"
   },
   "private": true

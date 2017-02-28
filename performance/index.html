@@ -32,6 +32,7 @@
 <script src="jsonParsers/ohm/ohm_json_grammar.js"></script>
 <script src="jsonParsers/ohm/ohm_json_parser.js"></script>
 
+<script src="jsonParsers/syntax/syntax_json_parser.js"></script>
 
 <script src="https://unpkg.com/parsimmon@1.2.0/build/parsimmon.browser.js"></script>
 <script src="jsonParsers/parsimmon/parsimmon_json_parser.js"></script>
@@ -280,9 +281,9 @@
 
                     </div>
 
-                    <div class="dataRow Ohm">
+                    <div class="dataRow syntax">
 
-                        <div class="benchName"><a rel="nofollow" href="https://github.com/cdglabs/ohm">Ohm-js</a></div>
+                        <div class="benchName"><a rel="nofollow" href="https://github.com/cdglabs/ohm">syntax-js</a></div>
                         <div class="benchRate">
                             <div class="value">&nbsp;</div>
                             <div class="delta">&nbsp;</div>
@@ -442,6 +443,8 @@
         }
     }
 
+    yyparse.parse(json_sample1k)
+
     var testCases = {
         Browser: function (suite) {
             addTest(suite, 'Browser', parse_json_browser)
@@ -488,8 +491,10 @@
 
         },
 
-        Ohm: function (suite) {
-            addTest(suite, 'Ohm', parse_json_with_ohm)
+        syntax: function (suite) {
+            addTest(suite, 'syntax', function (input) {
+                yyparse.parse(input)
+            })
         }
     }
 
